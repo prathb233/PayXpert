@@ -25,12 +25,12 @@ public class Main {
 			     		
 		int spacesCount = (150 - "Welcome to PayXpert 🚀".length()) / 2;
 		String spaces = " ".repeat(spacesCount);
-		int spacesCount2 = (150 - "Your own Payroll Management System! 🌟💸".length()) / 2;
+		int spacesCount2 = (150 - "Your own Payroll Management System! 🌟".length()) / 2;
 		String spaces2 = " ".repeat(spacesCount2);
 	
 		System.out.println();
-		System.out.println(spaces + "Welcome to PayXpert ðŸš€" + spaces);
-		System.out.println(spaces2 + "Your own Payroll Management System! ðŸŒŸ\n" + spaces2);
+		System.out.println(spaces + "Welcome to PayXpert 🚀" + spaces);
+		System.out.println(spaces2 + "Your own Payroll Management System! 🌟\n" + spaces2);
 		System.out.println("-".repeat(145));
 	    System.out.println("1. Employee Management");
 	    System.out.println("2. Payroll Management");
