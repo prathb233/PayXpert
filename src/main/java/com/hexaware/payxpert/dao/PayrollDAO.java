@@ -20,31 +20,32 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
 	
     @Override //Generate payroll for an employee
     public void generatePayroll(int employeeId, double basicSalary, double overtimePay, double deductions) {
-    	boolean exceptionOccurred = false;
     	try {
-            String query = "INSERT INTO payroll (Employee_Id, Basic_Salary, Overtime_Pay, Deductions) VALUES (?, ?, ?, ?)";
-            ps = con.prepareStatement(query);
+            String query = "INSERT INTO payroll "
+            		+ "(Employee_Id, Basic_Salary, Overtime_Pay, Deductions) "
+            		+ "VALUES (?, ?, ?, ?)";
+            ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, employeeId);
             ps.setDouble(2, basicSalary);
             ps.setDouble(3, overtimePay);
             ps.setDouble(4, deductions);
-
+            
             ps.executeUpdate();
+            
+			// Retrieve auto-generated keys (in this case, PayrollID)
+			ResultSet generatedKeys = ps.getGeneratedKeys();
+				if (generatedKeys.next()) {
+				    int generatedPayrollID = generatedKeys.getInt(1);
+		            System.out.println("\nPayroll generated successfully with ID: " + generatedPayrollID);
+				}
+
         } catch (SQLIntegrityConstraintViolationException  e) {
-        	exceptionOccurred = true;
             System.out.println("Employee with ID: " + employeeId + " not found");
-            throw new PayrollGenerationException();
 
         } catch (SQLException e) {
-        	// Handle SQL exception
+        	// Handle general SQL exception
             e.printStackTrace();            
         } 
-    	finally {
-            // This block will be executed regardless of whether an exception occurred or not
-            if (!exceptionOccurred) {
-                System.out.println("Payroll generated successfully");
-            }
-        }
     }
 
     @Override //Get payroll by ID
@@ -74,6 +75,8 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
                         rs.getDouble("Deductions"),
                         rs.getDouble("Net_Salary")
                 );
+            } else {
+            	throw new PayrollGenerationException();
             }
 
         } catch (SQLException e) {
@@ -112,6 +115,8 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
                         rs.getDouble("Net_Salary")
                 );
                 payrolls.add(payroll);
+            } if(!rs.next()) {
+            	throw new PayrollGenerationException(employeeId);
             }
 
         } catch (SQLException e) {

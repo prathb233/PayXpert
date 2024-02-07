@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/hexaware/payxpert/controller/EmployeeController.java=UTF-8
+encoding//src/main/java/com/hexaware/payxpert/exception/DatabaseConnectionException.java=UTF-8
+encoding//src/main/java/com/hexaware/payxpert/exception/EmployeeNotFoundException.java=UTF-8
 encoding//src/main/java/com/hexaware/payxpert/main/Main.java=UTF-8

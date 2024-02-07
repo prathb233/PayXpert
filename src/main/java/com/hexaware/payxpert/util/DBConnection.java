@@ -19,19 +19,25 @@ public class DBConnection {
     protected Statement stmt;
     protected ResultSet rs;
     
-    
-    protected static Connection getDBConn() {
+    /**
+     * Establishes the connection with Database
+     * @return connection as con 
+     */
+    public static Connection getDBConn() {
         try {
             if (con == null || con.isClosed()) {
                 con = DriverManager.getConnection(URL, USER, PASSWORD);
             }
         } catch (SQLException e) {
-            throw new DatabaseConnectionException("Error establishing database connection", e);
+            throw new DatabaseConnectionException();
 
         }
         return con;
     }
 
+    /**
+     * Closes the connection with Database
+     */
     protected void closeConnection() {
         try {
             if (con != null && !con.isClosed()) {

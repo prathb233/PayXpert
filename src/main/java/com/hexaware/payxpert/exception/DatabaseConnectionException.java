@@ -1,17 +1,13 @@
 package com.hexaware.payxpert.exception;
 
+import com.hexaware.payxpert.Constants;
+
 public class DatabaseConnectionException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-    private String customMessage;
 
-    public DatabaseConnectionException(String customMessage, Throwable cause) {
-        super(cause);
-        this.customMessage = customMessage;
-    }
-
-    @Override
-    public String getMessage() {
-        return "Database Connection Error: " + customMessage;
+    public DatabaseConnectionException() {
+        super(Constants.YELLOW + "⚠Error connecting to the database!" + Constants.RESET
+        		+ "\nPlease check your credentials and try again.");
     }
 }

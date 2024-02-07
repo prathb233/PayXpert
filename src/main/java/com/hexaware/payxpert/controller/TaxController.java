@@ -3,6 +3,7 @@ package com.hexaware.payxpert.controller;
 import java.util.List;
 import java.util.Scanner;
 
+import com.hexaware.payxpert.Constants;
 import com.hexaware.payxpert.dao.TaxDAO;
 import com.hexaware.payxpert.main.Main;
 import com.hexaware.payxpert.model.Tax;
@@ -10,9 +11,12 @@ import com.hexaware.payxpert.model.Tax;
 public class TaxController {
 	
 	TaxDAO taxDAO = new TaxDAO();
-		
+	/**
+	 * It displays the Employee Menu and operations which can be performed in it
+	 * @param scanner
+	 */
 	public void taxOperations(Scanner scanner) {
-	//Initializing the DB Conn b4 carring out Operations
+	//Initializing the DB connection to carryout Operations
 	taxDAO.getConn();
 	  int taxOption;
       do {
@@ -59,7 +63,7 @@ public class TaxController {
                   Main.displayMenu(scanner);
                   break;
               default:
-                  System.out.println("Invalid option. Please try again.");
+                  System.out.println(Constants.YELLOW + "Invalid option. Please try again." + Constants.RESET);
                   break;
           	}
       	} while (taxOption != 0);

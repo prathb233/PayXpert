@@ -16,12 +16,7 @@ public class FinancialRecordDAO extends DBConnection implements IFinancialRecord
 		con = getDBConn();
 	}
 	
-    @Override
-	/*
-	 * We dont need an implementation for adding Financial Records since
-	 * it has been handeled in the Database itself using Triggers!!
-	 * still I have added just for demonstration
-	 */
+    @Override //Adding a financial record
     public void addFinancialRecord(FinancialRecord financialRecord) {
         try {
         	con = getDBConn();

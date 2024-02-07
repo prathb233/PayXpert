@@ -8,7 +8,6 @@ import org.junit.Test;
 import com.hexaware.payxpert.model.Payroll;
 import com.hexaware.payxpert.util.DBConnection;
 
-
 public class PayrollDAOTest extends DBConnection{
 	
     private PayrollDAO payrollDAO;

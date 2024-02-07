@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hexaware.payxpert.dao.service.IEmployeeService;
+import com.hexaware.payxpert.exception.EmployeeNotFoundException;
 import com.hexaware.payxpert.model.Employee;
 import com.hexaware.payxpert.util.DBConnection;
 
 public class EmployeeDAO extends DBConnection implements IEmployeeService{
-	
-    //Get the database connection from DBConnection
+
+	//Get the database connection from DBConnection
 	public void getConn() {
 		con = getDBConn();
 	}
 	
     @Override //Get an employee by ID
     public Employee getEmployeeById(int employeeId) {
-
 	Employee employee = null;
 	try {
 	    String sqlQuery = "SELECT * FROM employee WHERE Employee_ID = ?";
@@ -51,7 +51,7 @@ public class EmployeeDAO extends DBConnection implements IEmployeeService{
 		    
 		} else {
             // Employee not found
-            return null;
+            throw new EmployeeNotFoundException(employeeId);
         }
 	    
 	} catch (SQLException e) {
@@ -135,12 +135,21 @@ public class EmployeeDAO extends DBConnection implements IEmployeeService{
     public void updateEmployee(Employee employee) {
 	try {
 	    String query = "UPDATE employee SET First_Name = ?, Last_Name = ?, "
-	    		+ "Date_of_Birth = ?, Phone_Number = ? WHERE Employee_ID = ?";
+	    		+ "Date_of_Birth = ?, Gender = ?, Email = ?, Phone_Number = ?, "
+	    		+ "Address = ?, Position = ?, Termination_Date = ? "
+	    		+ "WHERE Employee_ID = ?";
 	    ps = con.prepareStatement(query);
 		ps.setString(1, employee.getFirstName());
 		ps.setString(2, employee.getLastName());
 		ps.setObject(3, employee.getDateOfBirth());
-		ps.setInt(4, employee.getEmployeeID());
+		ps.setString(4, employee.getGender());
+		ps.setString(5, employee.getEmail());
+		ps.setString(6, employee.getPhoneNumber());
+		ps.setString(7, employee.getAddress());
+		ps.setString(8, employee.getPosition());
+		ps.setObject(9, employee.getTerminationDate());
+
+		ps.setInt(10, employee.getEmployeeID());
 
 		ps.executeUpdate();
 		

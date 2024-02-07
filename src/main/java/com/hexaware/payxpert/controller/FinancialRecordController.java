@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
+import com.hexaware.payxpert.Constants;
 import com.hexaware.payxpert.dao.FinancialRecordDAO;
 import com.hexaware.payxpert.main.Main;
 import com.hexaware.payxpert.model.FinancialRecord;
@@ -12,9 +13,12 @@ import com.hexaware.payxpert.model.FinancialRecord;
 public class FinancialRecordController {
 
 	FinancialRecordDAO financialRecordDAO = new FinancialRecordDAO();
-
+	/**
+	 * It displays the Financial Records Menu and operations which can be performed in it
+	 * @param scanner
+	 */
 	public void financialRecordOperations(Scanner scanner) {
-		//Initializing the DB Conn b4 carring out Operations
+		//Initializing the DB connection to carry out Operations
 		financialRecordDAO.getConn();
         int financialRecordOption;
         do {
@@ -67,7 +71,7 @@ public class FinancialRecordController {
                     Main.displayMenu(scanner);
                     break;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println(Constants.YELLOW + "Invalid option. Please try again." + Constants.RESET);
                     break;
         	}
     	} while (financialRecordOption != 0);
