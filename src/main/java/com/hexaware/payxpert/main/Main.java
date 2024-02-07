@@ -47,7 +47,7 @@ public class Main {
 	}
 	
 	/**
-	 * This is method is Main Menu which displays all the functions which can be performed
+	 * This method is the Main Menu which displays all the functions which can be performed in this application
 	 * @param scanner to reduce code redundancy we are creating scanner instance only once and passing it to every method which requires input
 	 */
     public static void displayMenu(Scanner scanner){
