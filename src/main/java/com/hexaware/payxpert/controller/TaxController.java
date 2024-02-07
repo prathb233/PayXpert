@@ -59,7 +59,7 @@ public class TaxController {
                   System.out.println("Taxes for Year: " + taxesForYear);
                   break;
               case 0:
-                  System.out.println("Returning to Main Menu...");
+                  System.out.println("Returning to Main Menu...\n");
                   Main.displayMenu(scanner);
                   break;
               default:

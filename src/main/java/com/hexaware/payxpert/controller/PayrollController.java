@@ -25,7 +25,7 @@ public class PayrollController {
 	
   	int payrollOption;
   	do {
-      System.out.println("\n---Payroll Menu---");
+      System.out.println(Constants.CYAN + "\n---Payroll Menu---" + Constants.RESET);
       System.out.println("1. Generate Payroll");
       System.out.println("2. Get Payroll by ID");
       System.out.println("3. Get Payrolls for Employee");
@@ -40,7 +40,9 @@ public class PayrollController {
     	  case 1:
 		  System.out.print("\nEnter employee ID: ");
 		  int employeeId = scanner.nextInt();
-		  System.out.print("Base Salary for the Employee: ");
+		  payrollDAO.getLatestPayroll(employeeId);
+
+		  System.out.print("\nBase Salary for the Employee: ");
 		  double baseSalary = scanner.nextDouble();
 		  System.out.print("Overtime Pay: ");
 		  double overtimePay = scanner.nextDouble();
@@ -57,7 +59,7 @@ public class PayrollController {
 				Payroll payrollById = payrollDAO.getPayrollById(payrollId);
 				System.out.println("Payroll: " + payrollById);
 			} catch (PayrollGenerationException p) {
-				System.out.println("Error: " + p.getMessage());
+				System.out.println(Constants.RED + "Error: " + Constants.RESET + p.getMessage());
 				break;
 			}
           
@@ -82,7 +84,7 @@ public class PayrollController {
           break;
           
     	  case 0:
-          System.out.println("\nReturning to Main Menu...");
+          System.out.println("Returning to Main Menu...\n");
           Main.displayMenu(scanner);
           break;
           

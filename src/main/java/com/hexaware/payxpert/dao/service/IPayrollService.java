@@ -36,4 +36,12 @@ public interface IPayrollService {
      * @return Payroll type ArrayList conatining all the available payrolls for the given range of date
      */
     List<Payroll> getPayrollsForPeriod(LocalDate startDate, LocalDate endDate);
+    
+    /**
+     * Its a helper method for generating Payroll, it mentions user about when the last payroll was generated
+     * </br>for the given employee and notifies that they will be generating the payroll for the next month
+     * @param employeeId for which the recent payroll is being fetched
+     * @return last payroll generated for the given employee
+     */
+    LocalDate getLatestPayroll(int employeeId);
 }

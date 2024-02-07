@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hexaware.payxpert.Constants;
 import com.hexaware.payxpert.dao.service.IPayrollService;
 import com.hexaware.payxpert.exception.PayrollGenerationException;
 import com.hexaware.payxpert.model.Payroll;
@@ -17,10 +18,9 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
 		con = getDBConn();
 	}
 	
-	
     @Override //Generate payroll for an employee
     public void generatePayroll(int employeeId, double basicSalary, double overtimePay, double deductions) {
-    	try {
+    	try {    		
             String query = "INSERT INTO payroll "
             		+ "(Employee_Id, Basic_Salary, Overtime_Pay, Deductions) "
             		+ "VALUES (?, ?, ?, ?)";
@@ -59,7 +59,7 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-            	// Convert Date to LocalDate
+            	//Convert SQL Date to LocalDate
     		    LocalDate startDate = rs.getDate("Pay_Period_Start_Date").toLocalDate();
     		    LocalDate endDate = rs.getDate("Pay_Period_End_Date").toLocalDate();
     		    //LocalDate endDate = (endDate != null) ? endDate.toLocalDate() : null;
@@ -98,10 +98,9 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-            	// Convert Date to LocalDate
+            	// Convert SQL Date to LocalDate
     		    LocalDate startDate = rs.getDate("Pay_Period_Start_Date").toLocalDate();
     		    LocalDate endDate = rs.getDate("Pay_Period_End_Date").toLocalDate();
-    		    //LocalDate endDate = (endDate != null) ? endDate.toLocalDate() : null;
     		    
                 Payroll payroll = new Payroll(
                         rs.getInt("Payroll_Id"),
@@ -139,7 +138,7 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-            	// Convert Date to LocalDate
+            	// Convert SQL Date to LocalDate
     		    LocalDate startDate2 = rs.getDate("Pay_Period_Start_Date").toLocalDate();
     		    LocalDate endDate2 = rs.getDate("Pay_Period_End_Date").toLocalDate();
     		    //LocalDate endDate = (endDate != null) ? endDate.toLocalDate() : null;
@@ -166,6 +165,35 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
         return payrolls;
     }
 
+    
+	@Override
+	public LocalDate getLatestPayroll(int employeeId) {
+		LocalDate latestPayroll = null;
+		try {
+			// Retrieving the latest payroll date
+			String query = "SELECT MAX(Pay_Period_End_Date) AS Latest_Payroll, "
+					+ "MONTHNAME(DATE_ADD(MAX(Pay_Period_End_Date), INTERVAL 1 MONTH)) AS Next_Month "
+			        + "FROM payroll "
+			        + "WHERE Employee_Id = ? "
+			        + "GROUP BY Employee_Id";
+			ps = con.prepareStatement(query);
+			ps.setInt(1, employeeId);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+			    latestPayroll = rs.getDate("Latest_Payroll").toLocalDate();
+			    String nextMonth = rs.getString("Next_Month");
+			    System.out.println(Constants.YELLOW + "\nNote! " + Constants.RESET
+			    		+"Last Salary for employee: " + employeeId + " was credited on: " + latestPayroll 
+			    		+"\nNow you are entering salary for the month of, " + nextMonth);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return latestPayroll;
+	}
+	
     //Close the database connection from DBConnection
     public void callCloseCon() {
     	closeConnection();

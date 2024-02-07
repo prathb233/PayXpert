@@ -50,31 +50,39 @@ public class EmployeeController {
     		    System.out.println(Constants.GREEN + "\n---All Employees---\n" + Constants.RESET + allEmployees);
     		    break;
     		case 3:
-    			System.out.print("Enter employee First Name: ");
-                String firstName = scanner.next();
+    			System.out.print("\nEnter employee First Name: ");
+                String firstName = scanner.nextLine();
                 System.out.print("Enter employee Last Name: ");
-                String lastName = scanner.next();
+                String lastName = scanner.nextLine();
                 System.out.print("Enter employee Date of Birth (YYYY-MM-DD): ");
-                LocalDate dateOfBirth = LocalDate.parse(scanner.next());
+                LocalDate dateOfBirth = LocalDate.parse(scanner.nextLine());
                 System.out.print("Enter employee Gender: ");
-                String gender = scanner.next();
+                String gender = scanner.nextLine();
                 System.out.print("Enter employee Email: ");
-                String email = scanner.next();
+                String email = scanner.nextLine();
                 System.out.print("Enter employee Phone Number: ");
-                String phoneNumber = scanner.next();
+                String phoneNumber = scanner.nextLine();
                 System.out.print("Enter employee Address: ");
-                String address = scanner.next();
+                String address = scanner.nextLine();
                 System.out.print("Enter employee Position: ");
-                String position = scanner.next();
+                String position = scanner.nextLine();
+                
                 System.out.print("Enter employee Joining Date (YYYY-MM-DD): ");
-                LocalDate joiningDate = LocalDate.parse(scanner.next());
+                LocalDate joiningDate = LocalDate.parse(scanner.nextLine());
                 
                 LocalDate terminationDate = null;
                 System.out.println("Want to assign Termination Date (Y or N)?");
-                String assignTrmDt = scanner.next();
+                String assignTrmDt = scanner.nextLine();
                 if("Y".equals(assignTrmDt)) {
-                    System.out.print("Enter employee Termination Date (YYYY-MM-DD): ");
-                    terminationDate = LocalDate.parse(scanner.next());
+                	do {
+	                    System.out.print("Enter employee Termination Date (YYYY-MM-DD): ");
+	                    terminationDate = LocalDate.parse(scanner.nextLine());
+	                	if(terminationDate.isBefore(joiningDate)) {
+	                		System.out.println(Constants.YELLOW + "⚠Error! " 
+	                				+ "Termination Date should be after the Joining Date\n" 
+	                				+ Constants.RESET);
+	                	}
+                	} while(terminationDate.isBefore(joiningDate));
                 }
     
                 Employee newEmployee = new Employee(
@@ -90,7 +98,7 @@ public class EmployeeController {
                 
     		case 4:
     			//getting employee to be updated
-    			System.out.print("Enter employee ID to update: ");
+    			System.out.print("\nEnter employee ID to update: ");
                 int updateEmployee = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
                 
@@ -128,15 +136,15 @@ public class EmployeeController {
                 		+ Constants.RESET);
                 break;
     		case 5:
-    		    System.out.print("Enter employee ID to remove: ");
+    		    System.out.print("\nEnter employee ID to remove: ");
     		    int removeEmployeeId = scanner.nextInt();
     		    employeeDAO.removeEmployee(removeEmployeeId);
     		    System.out.println(Constants.GREEN 
-    		    		+ "Employee with ID: " + removeEmployeeId + "removed successfully!"  
+    		    		+ "Employee with ID: " + removeEmployeeId + " removed successfully!"  
     		    		+ Constants.RESET);
     		    break;
     		case 0:
-                System.out.println("Returning to Main Menu...");
+                System.out.println("Returning to Main Menu...\n");
     			Main.displayMenu(scanner);
     		    break;
     		default:

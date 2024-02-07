@@ -67,7 +67,7 @@ public class FinancialRecordController {
                     System.out.println("\nFinancial Records for Date: " + dateForFinancialRecords + "\n" + financialRecordsForDate);
                     break;
                 case 0:
-                    System.out.println("Returning to Main Menu...");
+                    System.out.println("Returning to Main Menu...\n");
                     Main.displayMenu(scanner);
                     break;
                 default:
