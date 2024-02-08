@@ -114,7 +114,7 @@ public class Payroll {
 				+ "\nPay Period Start Date = " + payPeriodStartDate
 				+ "\nPay Period End Date = " + payPeriodEndDate 
 				+ "\nBasic Salary = " + basicSalary + "\nOvertime Pay = " + overtimePay
-				+ "\nGross Salary = " + grossSalary + "Deductions = " + deductions
+				+ "\nGross Salary = " + grossSalary + "\nDeductions = " + deductions
 				+ "\nNet Salary = " + netSalary + "\n";
 	}
     

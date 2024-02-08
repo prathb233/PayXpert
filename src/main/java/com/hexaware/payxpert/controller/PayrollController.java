@@ -57,7 +57,9 @@ public class PayrollController {
 				System.out.print("\nEnter payroll ID: ");
 				int payrollId = scanner.nextInt();
 				Payroll payrollById = payrollDAO.getPayrollById(payrollId);
-				System.out.println("Payroll: " + payrollById);
+				System.out.println(Constants.GREEN + "\n---Payroll Details---" + Constants.RESET
+									+ payrollById);
+				break;
 			} catch (PayrollGenerationException p) {
 				System.out.println(Constants.RED + "Error: " + Constants.RESET + p.getMessage());
 				break;
@@ -65,22 +67,26 @@ public class PayrollController {
           
     	  case 3:
 			try {
-				System.out.print("\nEnter employee ID: ");
-				  int employeeIdForPayrolls = scanner.nextInt();
-				  List<Payroll> payrollsForEmployee = payrollDAO.getPayrollsForEmployee(employeeIdForPayrolls);
-				  System.out.println("\n---Payrolls for Employee---\n" + payrollsForEmployee);
+			  System.out.print("\nEnter employee ID: ");
+			  int employeeIdForPayrolls = scanner.nextInt();
+			  List<Payroll> payrollsForEmployee = payrollDAO.getPayrollsForEmployee(employeeIdForPayrolls);
+			  System.out.println(Constants.GREEN + "\n---Payrolls for Employee---\n" + Constants.RESET
+					  			+ payrollsForEmployee);
+			  break;
 			} catch (PayrollGenerationException p) {
 				System.out.println("Error: " + p.getMessage());
-		          break;
+		        break;
 			}
           
     	  case 4:
-          System.out.print("\nEnter start date (yyyy-mm-dd): ");
+          System.out.print("\nFrom (YYYY-MM-DD): ");
           LocalDate startDateForPeriod = LocalDate.parse(scanner.nextLine());
-          System.out.print("Enter end date (yyyy-mm-dd): ");
+          System.out.print("To (YYYY-MM-DD): ");
           LocalDate endDateForPeriod = LocalDate.parse(scanner.nextLine());
+          
           List<Payroll> payrollsForPeriod = payrollDAO.getPayrollsForPeriod(startDateForPeriod, endDateForPeriod);
-          System.out.println("Payrolls for Period: " + payrollsForPeriod);
+          System.out.println(Constants.GREEN + "\n---Payrolls for the given Period---\n" + Constants.RESET 
+        		  			+ payrollsForPeriod);
           break;
           
     	  case 0:

@@ -36,7 +36,8 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
 			ResultSet generatedKeys = ps.getGeneratedKeys();
 				if (generatedKeys.next()) {
 				    int generatedPayrollID = generatedKeys.getInt(1);
-		            System.out.println("\nPayroll generated successfully with ID: " + generatedPayrollID);
+		            System.out.println(Constants.GREEN + "\nPayroll generated successfully with ID: " 
+		            		+ generatedPayrollID + Constants.RESET);
 				}
 
         } catch (SQLIntegrityConstraintViolationException  e) {
@@ -90,7 +91,8 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
     @Override //Get payrolls for an employee
     public List<Payroll> getPayrollsForEmployee(int employeeId) {
         List<Payroll> payrolls = new ArrayList<>();
-
+        boolean rowsProcessed = false;
+        
         try {
             String query = "SELECT * FROM payroll WHERE Employee_Id = ?";
             ps = con.prepareStatement(query);
@@ -98,6 +100,7 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
             rs = ps.executeQuery();
 
             while (rs.next()) {
+            	rowsProcessed = true;
             	// Convert SQL Date to LocalDate
     		    LocalDate startDate = rs.getDate("Pay_Period_Start_Date").toLocalDate();
     		    LocalDate endDate = rs.getDate("Pay_Period_End_Date").toLocalDate();
@@ -114,10 +117,9 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
                         rs.getDouble("Net_Salary")
                 );
                 payrolls.add(payroll);
-            } if(!rs.next()) {
-            	throw new PayrollGenerationException(employeeId);
+            } if(!rowsProcessed) {
+                throw new PayrollGenerationException(employeeId);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle SQL exception
@@ -186,6 +188,8 @@ public class PayrollDAO extends DBConnection implements IPayrollService {
 			    System.out.println(Constants.YELLOW + "\nNote! " + Constants.RESET
 			    		+"Last Salary for employee: " + employeeId + " was credited on: " + latestPayroll 
 			    		+"\nNow you are entering salary for the month of, " + nextMonth);
+			} else {
+				System.out.println("You are generating the 1st payroll for Employee: " + employeeId);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

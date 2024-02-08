@@ -165,8 +165,7 @@ public class Employee {
                 "\nAddress = '" + address + '\'' +
                 "\nPosition = '" + position + '\'' +
                 "\nJoining Date = " + joiningDate +
-                "\nTermination Date = " + terminationDate + "\n"
-                ;
+                "\nTermination Date = " + terminationDate + "\n";
     }
 }
 

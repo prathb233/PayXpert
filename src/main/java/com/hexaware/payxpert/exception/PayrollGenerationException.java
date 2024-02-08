@@ -14,8 +14,8 @@ public class PayrollGenerationException extends RuntimeException {
 
     //Throws error while fetching Payroll for a non-existing employee
 	public PayrollGenerationException(int employeeId) {
-        super(Constants.YELLOW + "Cannot fetch Payrolls for given employee!" + Constants.RESET
-        		+ "\nEmplyoee with ID: " + employeeId + " not found.");
+        super(Constants.YELLOW + "No Payrolls generated for the given employee!" + Constants.RESET
+        		+ "\nOR Emplyoee with ID: " + employeeId + " not found.");
 	}
 
 }

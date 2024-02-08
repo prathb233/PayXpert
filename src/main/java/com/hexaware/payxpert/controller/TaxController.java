@@ -20,7 +20,7 @@ public class TaxController {
 	taxDAO.getConn();
 	  int taxOption;
       do {
-          System.out.println("\n---Tax Menu---");
+          System.out.println(Constants.CYAN + "\n---Tax Menu---" + Constants.RESET);
           System.out.println("1. Get Tax for a Financial Year");
           System.out.println("2. Get Tax by ID");
           System.out.println("3. Get Taxes for all existing Financial years of an Employee");
@@ -44,19 +44,22 @@ public class TaxController {
                   System.out.print("Enter Tax ID: ");
                   int taxId = scanner.nextInt();
                   Tax taxById = taxDAO.getTaxById(taxId);
-                  System.out.println("Tax details: " + taxById);
+                  System.out.println(Constants.GREEN + "\n---Tax details---" + Constants.RESET 
+                		  			+ taxById);
                   break;
               case 3:
                   System.out.print("Enter employee ID: ");
                   int employeeIdForTaxes = scanner.nextInt();
                   List<Tax> taxesForEmployee = taxDAO.getTaxesForEmployee(employeeIdForTaxes);
-                  System.out.println("Taxes for Employee: " + taxesForEmployee);
+                  System.out.println(Constants.GREEN + "\n---Tax details---" + Constants.RESET 
+                		  			+ taxesForEmployee);
                   break;
               case 4:
                   System.out.print("Enter year: ");
                   int yearForTaxes = scanner.nextInt();
                   List<Tax> taxesForYear = taxDAO.getTaxesForYear(yearForTaxes);
-                  System.out.println("Taxes for Year: " + taxesForYear);
+                  System.out.println(Constants.GREEN + "\n---Tax details---" + Constants.RESET 
+                		  			+ taxesForYear);
                   break;
               case 0:
                   System.out.println("Returning to Main Menu...\n");

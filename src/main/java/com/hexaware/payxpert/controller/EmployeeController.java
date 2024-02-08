@@ -42,8 +42,8 @@ public class EmployeeController {
     		    int employeeId = scanner.nextInt();
     		    Employee employeeById = employeeDAO.getEmployeeById(employeeId);
     		    System.out.println(
-    		    		Constants.GREEN + "\n---Employee Details---\n" 
-    		    		+ Constants.RESET + employeeById);
+    		    		Constants.GREEN + "\n---Employee Details---\n" + 
+    		    		Constants.RESET + employeeById);
     		    break;
     		case 2:
     		    List<Employee> allEmployees = employeeDAO.getAllEmployees();

@@ -67,7 +67,7 @@ public class Tax {
 	public String toString() {
 		return "\nTax ID = " + taxID + "\nEmployee ID = " + employeeID
 				+ "\nTax Year = " + taxYear + "\nTaxable Income = " + taxableIncome
-				+ "\nTax Amount = " + taxAmount;
+				+ "\nTax Amount = " + taxAmount +"\n";
 	}
     
     
