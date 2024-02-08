@@ -35,10 +35,9 @@ public class TaxController {
               case 1:
                   System.out.print("Enter employee ID: ");
                   int employeeId = scanner.nextInt();
-                  //System.out.print("Enter the Tax Year (yyyy): ");
-                  //int taxYear = scanner.nextInt();
-                  taxDAO.getTaxById(employeeId);
-                  System.out.println("Tax calculated successfully (not implemented)");
+                  System.out.print("Enter the Tax Year (yyyy): ");
+                  int taxYear = scanner.nextInt();
+                  taxDAO.calculateTax(employeeId, taxYear);
                   break;
               case 2:
                   System.out.print("Enter Tax ID: ");

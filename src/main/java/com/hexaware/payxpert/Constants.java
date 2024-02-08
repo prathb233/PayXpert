@@ -1,7 +1,7 @@
 package com.hexaware.payxpert;
 
 /**
- * It contains the ANSI codes for specific colors so that we can use it add a little Styling to the console
+ * It contains the ANSI codes for specific colors so that we can use it to add a little Styling to the console
  */
 public class Constants {
     public static final String RESET = "\u001B[0m";

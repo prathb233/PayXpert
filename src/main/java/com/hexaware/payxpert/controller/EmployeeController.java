@@ -127,7 +127,7 @@ public class EmployeeController {
                 assignTrmDt = scanner.next();
                 if("Y".equals(assignTrmDt)) {
                     System.out.print("Enter employee Termination Date (yyyy-mm-dd): ");
-                    updatedEmployee.setTerminationDate(LocalDate.parse(scanner.nextLine()));
+                    updatedEmployee.setTerminationDate(LocalDate.parse(scanner.next()));
                 }
 
                 employeeDAO.updateEmployee(updatedEmployee);

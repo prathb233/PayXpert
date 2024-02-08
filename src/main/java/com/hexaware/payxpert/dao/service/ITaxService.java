@@ -34,4 +34,6 @@ public interface ITaxService {
      * @return Tax type ArrayList containing the list of Tax details for the given Fin. year
      */
     List<Tax> getTaxesForYear(int taxYear);
+
+	void displayUpdatedTax(int employeeId, int taxYear);
 }

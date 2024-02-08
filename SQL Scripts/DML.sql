@@ -18,31 +18,11 @@ VALUES
 -- Insert values into Payroll Table
 INSERT INTO Payroll (Employee_ID, Basic_Salary, Overtime_Pay, Deductions)
 VALUES
-    (102, 803000, 2506, 4600),
-    (102, 503000, 2500, 4600),
-    (102, 703000, 3000, 4600),
-    (102, 602000, 1000, 4600),
-    (102, 805000, 1200, 4600),
-    (102, 203000, 3400, 4600),
-    (102, 901000, 1000, 4600),
-    (102, 102000, 2590, 4600),
-    (102, 604000, 2530, 4600),
-    (102, 803000, 2200, 4600),
-    (102, 200000, 2508, 4600),
-    (102, 801000, 4500, 4600),
-    (102, 1000000, 3006, 4600),
-    (102, 304000, 1080, 4600),
-    (102, 902900, 2502, 4600);
-
-
--- Insert values into Tax Table
-INSERT INTO Tax (Employee_ID, Tax_Year)
-VALUES
-	(103, 2021);
-/*
-	Condition:
-		b4 inserting values for a specific Employee and Year into the Tax table make sure 
-        that they have Salaries inserted for that whole year else ull have to insert Tax_year again 
-        and it will create more than one columns for an emplyoee for that year
-*/
-    
+    (103, 90000, 2530, 4600),
+    (103, 803000, 2200, 4600),
+    (103, 200000, 2508, 4600),
+    (103, 801000, 4500, 4600),
+    (103, 1000000, 3006, 4600),
+    (103, 304000, 1080, 4600),
+    (103, 902900, 2502, 4600);
+  

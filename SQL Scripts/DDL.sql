@@ -43,7 +43,7 @@ CREATE TABLE Tax (
     Taxable_Income DECIMAL(10, 2),
     Tax_Amount DECIMAL(10, 2),
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID),
-    UNIQUE KEY unique_tax_id (Tax_ID, Employee_ID)
+    UNIQUE KEY unique_tax (Employee_ID, Tax_Year)
 )	AUTO_INCREMENT = 4758;
 
 

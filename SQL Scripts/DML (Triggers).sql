@@ -1,14 +1,12 @@
 USE PayXpert;
 
--- DROP TRIGGER update_pay_end_dates;
 -- Trigger to insert pay_dates in Payroll Table
 DELIMITER //
-CREATE TRIGGER update_pay_end_dates
+CREATE TRIGGER update_pay_dates
 BEFORE INSERT ON Payroll
 FOR EACH ROW
 BEGIN
 DECLARE last_end_date DATE;
-
 	SELECT (MAX(Pay_Period_End_Date)) INTO last_end_date
     FROM Payroll
     WHERE Employee_ID = NEW.Employee_ID;
@@ -28,33 +26,49 @@ DELIMITER ;
 -- Trigger to update Taxable Income
 DELIMITER //
 CREATE TRIGGER update_taxable_income
-BEFORE INSERT ON Tax
+AFTER INSERT ON Payroll
 FOR EACH ROW
 BEGIN
     DECLARE v_taxable_income DECIMAL(10, 2);
-    DECLARE pay_year INT;
-    
--- Calculating the cumulative salary for every year
-	SELECT SUM(Net_Salary) INTO v_taxable_income
+	DECLARE entry_exists INT;
+    -- Check if there's an existing entry for the given Employee_ID and Tax_Year
+    SELECT COUNT(*) INTO entry_exists
+    FROM Tax
+    WHERE Employee_ID = NEW.Employee_ID AND Tax_Year = YEAR(NEW.Pay_Period_Start_Date);
+
+    -- Calculating the cumulative salary for every year
+    SELECT SUM(Net_Salary) INTO v_taxable_income
     FROM Payroll P
     WHERE P.Employee_ID = NEW.Employee_ID AND
-    YEAR (P.Pay_Period_Start_Date) = NEW.Tax_Year
-    GROUP BY P.Employee_ID, NEW.Tax_Year;
-    
-    
--- Update Tax table based on cumulative Net Salary
-	IF v_taxable_income < 500000 THEN
-		SET NEW.Taxable_Income = 0;  
-        SET NEW.Tax_Amount = 0;
+    YEAR(P.Pay_Period_Start_Date) = YEAR(NEW.Pay_Period_Start_Date)
+    GROUP BY P.Employee_ID, YEAR(NEW.Pay_Period_Start_Date);
+
+    -- Update or insert into Tax table based on cumulative Net Salary
+    IF entry_exists > 0 THEN
+        -- Entry already exists, update it
+        UPDATE Tax T
+        SET Taxable_Income = CASE 
+							 WHEN v_taxable_income < 500000 THEN 0 
+							 ELSE v_taxable_income - 500000 
+							 END,
+                                
+                Tax_Amount = CASE 
+						     WHEN v_taxable_income < 500000 THEN 0 
+						     ELSE 0.05 * (v_taxable_income - 500000) 
+							 END
+        WHERE T.Employee_ID = NEW.Employee_ID AND Tax_Year = YEAR(NEW.Pay_Period_Start_Date);
     ELSE
-        SET 
-            NEW.Taxable_Income = v_taxable_income - 500000,
-            NEW.Tax_Amount = 0.05 * (v_taxable_income - 500000);
+        -- Entry doesn't exist, insert new data
+        INSERT INTO Tax (Employee_ID, Tax_Year, Taxable_Income, Tax_Amount)
+        VALUES (NEW.Employee_ID, YEAR(NEW.Pay_Period_Start_Date), 
+                CASE WHEN v_taxable_income < 500000 THEN 0 ELSE v_taxable_income - 500000 END,
+                CASE WHEN v_taxable_income < 500000 THEN 0 ELSE 0.05 * (v_taxable_income - 500000) END);
     END IF;
 END;
 //
 DELIMITER ;
 
+-- TRUNCATE TABLE Tax; //for testing!
 /* 
 	Notes:
 		First of all we'll have to use BEFORE INSERT in this case as we are inserting and updating the Tax table
@@ -62,7 +76,6 @@ DELIMITER ;
         coz now we r not updating the table infact we r inserting new values to it in real-time
 */
 
- 
 -- Trigger to Insert Values in Financial_Records
 DELIMITER //
 CREATE TRIGGER update_financial_records

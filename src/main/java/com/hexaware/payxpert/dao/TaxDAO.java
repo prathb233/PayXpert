@@ -16,13 +16,35 @@ public class TaxDAO extends DBConnection implements ITaxService{
 	}
 	
     @Override //Calculate tax for an employee (not implemented here, as it's calculated in the database)
-    public void calculateTax(int employeeId, int taxDate) {
+    public void displayUpdatedTax(int employeeId, int taxYear) {
+    	try {
+			String query = "UPDATE Tax "
+						+ "SET Tax_Year = ? WHERE Employee_ID = ?";
+			
+			ps = con.prepareStatement(query);
+			ps.setInt(1, taxYear);
+			ps.setInt(2, employeeId);
+			
+			String query2 = "SELECT * FROM Tax WHERE Tax_Year = ? AND Employee_ID = ?";
+			ps = con.prepareStatement(query2);
+			ps.setInt(1, taxYear);
+			ps.setInt(2, employeeId);
+			
+			rs = ps.executeQuery();
+	
+			rs.next();
+			Double taxAmount = rs.getDouble(5);
+			System.out.println("Your new Tax Amount for the Fin. year: " 
+					+ taxYear + " is: " + taxAmount);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
     }
 
     @Override //Get tax by ID
     public Tax getTaxById(int taxId) {
-		con = getDBConn();
         Tax tax = null;
         try {
             String sqlQuery = "SELECT * FROM Tax WHERE Tax_ID = ?";
@@ -110,4 +132,18 @@ public class TaxDAO extends DBConnection implements ITaxService{
     public void callCloseCon() {
     	closeConnection();
     }
+
+	@Override
+	public void calculateTax(int employeeId, int taxYear) {
+		try {
+			String query = "INSERT INTO Tax (Employee_ID, Tax_Year) VALUES (?,?)";
+			ps = con.prepareStatement(query);
+			ps.setInt(1, employeeId);
+			ps.setInt(2, taxYear);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
 }
