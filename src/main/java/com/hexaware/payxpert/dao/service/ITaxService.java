@@ -10,8 +10,9 @@ public interface ITaxService {
 	 * since its getting calculated in the database itself using Triggers!
 	 * @param employeeId
 	 * @param taxYear
+	 * @return Tax type object containing the tax details of the given Financial year for the given employee
 	 */
-    void calculateTax(int employeeId, int taxYear);
+    Tax getTaxByYear(int employeeId, int taxYear);
     
     /**
      * Retrieves the Income Tax for the given TaxID 
@@ -34,6 +35,4 @@ public interface ITaxService {
      * @return Tax type ArrayList containing the list of Tax details for the given Fin. year
      */
     List<Tax> getTaxesForYear(int taxYear);
-
-	void displayUpdatedTax(int employeeId, int taxYear);
 }

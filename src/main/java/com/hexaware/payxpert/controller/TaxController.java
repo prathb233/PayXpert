@@ -21,9 +21,9 @@ public class TaxController {
 	  int taxOption;
       do {
           System.out.println("\n---Tax Menu---");
-          System.out.println("1. Calculate Tax");
+          System.out.println("1. Get Tax for a Financial Year");
           System.out.println("2. Get Tax by ID");
-          System.out.println("3. Get Taxes for Employee");
+          System.out.println("3. Get Taxes for all existing Financial years of an Employee");
           System.out.println("4. Get Taxes for Year");
           System.out.println("0. Back to Main Menu");
           System.out.print("Choose an option: ");
@@ -37,7 +37,8 @@ public class TaxController {
                   int employeeId = scanner.nextInt();
                   System.out.print("Enter the Tax Year (yyyy): ");
                   int taxYear = scanner.nextInt();
-                  taxDAO.calculateTax(employeeId, taxYear);
+                  Tax taxForYear = taxDAO.getTaxByYear(employeeId, taxYear);
+                  System.out.println(Constants.GREEN + "\n---Tax details---" + Constants.RESET + taxForYear); 
                   break;
               case 2:
                   System.out.print("Enter Tax ID: ");
