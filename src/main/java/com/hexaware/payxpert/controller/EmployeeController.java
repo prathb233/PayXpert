@@ -6,13 +6,14 @@ import java.util.Scanner;
 
 import com.hexaware.payxpert.Constants;
 import com.hexaware.payxpert.dao.EmployeeDAO;
+import com.hexaware.payxpert.dao.service.IEmployeeService;
 import com.hexaware.payxpert.exception.EmployeeNotFoundException;
 import com.hexaware.payxpert.main.Main;
 import com.hexaware.payxpert.model.Employee;
 
 public class EmployeeController {
 	
-	EmployeeDAO employeeDAO = new EmployeeDAO();
+	IEmployeeService empI = new EmployeeDAO();
 	
 	/**
 	 * It displays the Employee Menu and operations which can be performed in it
@@ -21,7 +22,7 @@ public class EmployeeController {
     public void employeeOperations(Scanner scanner) {
     	try {
     		//Initializing the DB connection to carry out Operations
-    		employeeDAO.getConn();
+    		empI.getConn();
     	    int employeeOption;
     	    do {
     	    System.out.println(Constants.CYAN + "\n---Employee Menu---" + Constants.RESET);
@@ -40,13 +41,13 @@ public class EmployeeController {
     		case 1:
     		    System.out.print("\nEnter employee ID: ");
     		    int employeeId = scanner.nextInt();
-    		    Employee employeeById = employeeDAO.getEmployeeById(employeeId);
+    		    Employee employeeById = empI.getEmployeeById(employeeId);
     		    System.out.println(
     		    		Constants.GREEN + "\n---Employee Details---\n" + 
     		    		Constants.RESET + employeeById);
     		    break;
     		case 2:
-    		    List<Employee> allEmployees = employeeDAO.getAllEmployees();
+    		    List<Employee> allEmployees = empI.getAllEmployees();
     		    System.out.println(Constants.GREEN + "\n---All Employees---\n" + Constants.RESET + allEmployees);
     		    break;
     		case 3:
@@ -90,7 +91,7 @@ public class EmployeeController {
                         email, phoneNumber, address, position,
                         joiningDate, terminationDate);
 
-                employeeDAO.addEmployee(newEmployee);
+                empI.addEmployee(newEmployee);
                 System.out.println(Constants.GREEN 
                 		+ "Employee added successfully!"
                 		+ Constants.RESET);
@@ -103,7 +104,7 @@ public class EmployeeController {
                 scanner.nextLine(); // Consume newline
                 
                 //store the details of employee being updated in a new Employee instance
-                Employee updatedEmployee = employeeDAO.getEmployeeById(updateEmployee);
+                Employee updatedEmployee = empI.getEmployeeById(updateEmployee);
                 
                 System.out.print("Enter new First Name: ");
                 updatedEmployee.setFirstName(scanner.nextLine());
@@ -130,7 +131,7 @@ public class EmployeeController {
                     updatedEmployee.setTerminationDate(LocalDate.parse(scanner.next()));
                 }
 
-                employeeDAO.updateEmployee(updatedEmployee);
+                empI.updateEmployee(updatedEmployee);
                 System.out.println(Constants.GREEN 
                 		+ "Employee with ID: " + updateEmployee + " updated successfully!" 
                 		+ Constants.RESET);
@@ -138,10 +139,10 @@ public class EmployeeController {
     		case 5:
     		    System.out.print("\nEnter employee ID to remove: ");
     		    int removeEmployeeId = scanner.nextInt();
-    		    employeeDAO.removeEmployee(removeEmployeeId);
-    		    System.out.println(Constants.GREEN 
-    		    		+ "Employee with ID: " + removeEmployeeId + " removed successfully!"  
-    		    		+ Constants.RESET);
+    		    empI.removeEmployee(removeEmployeeId);
+//    		    System.out.println(Constants.GREEN 
+//    		    		+ "Employee with ID: " + removeEmployeeId + " removed successfully!"  
+//    		    		+ Constants.RESET);
     		    break;
     		case 0:
                 System.out.println("Returning to Main Menu...\n");
@@ -156,7 +157,7 @@ public class EmployeeController {
     	} catch (EmployeeNotFoundException e) {
             System.out.println(e.getMessage());
         } finally {
-    	    employeeDAO.callCloseCon();
+    	    empI.callCloseCon();
     	}
     }
 }

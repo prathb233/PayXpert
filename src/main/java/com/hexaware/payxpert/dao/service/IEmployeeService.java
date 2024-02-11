@@ -5,6 +5,10 @@ import java.util.List;
 import com.hexaware.payxpert.model.Employee;
 
 public interface IEmployeeService {
+	
+	//Get the database connection from DBConnection
+	public void getConn();
+
 	/**
 	 * Retrieves employee details from the database using SQL queries
 	 * @param employeeId for whom the data is being retrieved
@@ -30,5 +34,13 @@ public interface IEmployeeService {
      * @param employee stores the updated details enterd by user
      */
     void updateEmployee(Employee employee);
+    
+    /**
+     * Removes the given employee from DB
+     * @param employeeId employee to remove
+     */
     void removeEmployee(int employeeId);
+    
+	//Close the database connection from DBConnection
+	public void callCloseCon();
 }

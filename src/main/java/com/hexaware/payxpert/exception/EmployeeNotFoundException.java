@@ -8,6 +8,7 @@ public class EmployeeNotFoundException extends RuntimeException {
 
 
     public EmployeeNotFoundException(int employeeId) {
-        super(Constants.YELLOW + "⚠Error! " + Constants.RESET + "Employee not found with ID: " + employeeId);
+        super(Constants.YELLOW + "⚠Error! " + Constants.RESET 
+        		+ "Employee not found with ID: " + employeeId + "\n");
     }
 }

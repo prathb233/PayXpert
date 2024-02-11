@@ -84,7 +84,7 @@ public class Main {
 	            System.out.println(spaces + Constants.CYAN + "Thanks for using PayXpert!" + spaces);
 	            break;
 	        default:
-	            System.out.println(Constants.YELLOW + "Invalid option. Please try again." + Constants.RESET);
+	            System.out.println(Constants.YELLOW + "Invalid option. Please try again. \n" + Constants.RESET);
 	            break;
 	    }   
     } 

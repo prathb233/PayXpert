@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hexaware.payxpert.Constants;
 import com.hexaware.payxpert.dao.service.IEmployeeService;
 import com.hexaware.payxpert.exception.EmployeeNotFoundException;
 import com.hexaware.payxpert.model.Employee;
@@ -12,7 +13,7 @@ import com.hexaware.payxpert.util.DBConnection;
 
 public class EmployeeDAO extends DBConnection implements IEmployeeService{
 
-	//Get the database connection from DBConnection
+	@Override
 	public void getConn() {
 		con = getDBConn();
 	}
@@ -33,7 +34,6 @@ public class EmployeeDAO extends DBConnection implements IEmployeeService{
 		    LocalDate joiningDate = rs.getDate("Joining_Date").toLocalDate();
 		    Date terminationDateSQL = rs.getDate("Termination_Date");
 		    LocalDate terminationDate = (terminationDateSQL != null) ? terminationDateSQL.toLocalDate() : null;
-		    //LocalDate terminationDate = rs.getDate("Termination_Date").toLocalDate();
 		    
 		    // Create Employee object from ResultSet
 		    employee = new Employee(
@@ -105,30 +105,30 @@ public class EmployeeDAO extends DBConnection implements IEmployeeService{
 
     @Override //Add an employee
     public void addEmployee(Employee employee) {
-	try {
-	    String query = "INSERT INTO employee (First_Name, Last_Name,"
-	    		+ "Date_of_Birth, Gender, Email, Phone_Number, Address, Position,"
-	    		+ "Joining_Date, Termination_Date)"
-	    		+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
-
-	    ps = con.prepareStatement(query);
-		ps.setString(1, employee.getFirstName());
-		ps.setString(2, employee.getLastName());
-		ps.setObject(3, employee.getDateOfBirth());
-		ps.setString(4, employee.getGender());
-		ps.setString(5, employee.getEmail());
-		ps.setString(6, employee.getPhoneNumber());
-		ps.setString(7, employee.getAddress());
-		ps.setString(8, employee.getPosition());
-		ps.setObject(9, employee.getJoiningDate());
-		ps.setObject(10, employee.getTerminationDate());
-		
-		ps.executeUpdate();
-	    
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	    // Handle SQL exception
-	}
+		try {
+		    String query = "INSERT INTO employee (First_Name, Last_Name,"
+		    		+ "Date_of_Birth, Gender, Email, Phone_Number, Address, Position,"
+		    		+ "Joining_Date, Termination_Date)"
+		    		+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+	
+		    ps = con.prepareStatement(query);
+			ps.setString(1, employee.getFirstName());
+			ps.setString(2, employee.getLastName());
+			ps.setObject(3, employee.getDateOfBirth());
+			ps.setString(4, employee.getGender());
+			ps.setString(5, employee.getEmail());
+			ps.setString(6, employee.getPhoneNumber());
+			ps.setString(7, employee.getAddress());
+			ps.setString(8, employee.getPosition());
+			ps.setObject(9, employee.getJoiningDate());
+			ps.setObject(10, employee.getTerminationDate());
+			
+			ps.executeUpdate();
+		    
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    // Handle SQL exception
+		}
     }
 
     @Override //Update an employee
@@ -166,7 +166,16 @@ public class EmployeeDAO extends DBConnection implements IEmployeeService{
 	    ps = con.prepareStatement(query);
 		ps.setInt(1, employeeId);
 
-		ps.executeUpdate();
+		int rowsAffected = ps.executeUpdate();
+		
+		if(rowsAffected == 0) {
+			System.out.println(Constants.RED 
+					+ "Sorry employee with ID: " + employeeId + " not found!" + Constants.RESET);
+		} else {
+		    System.out.println(Constants.GREEN 
+		    		+ "Employee with ID: " + employeeId + " removed successfully!"  
+		    		+ Constants.RESET);
+		}
 	 
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -174,7 +183,7 @@ public class EmployeeDAO extends DBConnection implements IEmployeeService{
 	}
     }
 
-    //Close the database connection from DBConnection
+    @Override
     public void callCloseCon() {
     	closeConnection();
     }
