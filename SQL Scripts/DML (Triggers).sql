@@ -31,6 +31,7 @@ FOR EACH ROW
 BEGIN
     DECLARE v_taxable_income DECIMAL(10, 2);
 	DECLARE entry_exists INT;
+    
     -- Check if there's an existing entry for the given Employee_ID and Tax_Year
     SELECT COUNT(*) INTO entry_exists
     FROM Tax
@@ -48,13 +49,13 @@ BEGIN
         -- Entry already exists, update it
         UPDATE Tax T
         SET Taxable_Income = CASE 
-							 WHEN v_taxable_income < 500000 THEN 0 
-							 ELSE v_taxable_income - 500000 
+								WHEN v_taxable_income < 500000 THEN 0 
+								ELSE v_taxable_income - 500000 
 							 END,
                                 
                 Tax_Amount = CASE 
-						     WHEN v_taxable_income < 500000 THEN 0 
-						     ELSE 0.05 * (v_taxable_income - 500000) 
+								WHEN v_taxable_income < 500000 THEN 0 
+								ELSE 0.05 * (v_taxable_income - 500000) 
 							 END
         WHERE T.Employee_ID = NEW.Employee_ID AND Tax_Year = YEAR(NEW.Pay_Period_Start_Date);
     ELSE
@@ -67,14 +68,7 @@ BEGIN
 END;
 //
 DELIMITER ;
-
 -- TRUNCATE TABLE Tax; //for testing!
-/* 
-	Notes:
-		First of all we'll have to use BEFORE INSERT in this case as we are inserting and updating the Tax table
-        at the same time and when we use BEFORE INSERT we can directly use SET NEW. ... inteasd of using UPDATE Tax 
-        coz now we r not updating the table infact we r inserting new values to it in real-time
-*/
 
 -- Trigger to Insert Values in Financial_Records
 DELIMITER //

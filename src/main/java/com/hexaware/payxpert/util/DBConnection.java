@@ -42,6 +42,9 @@ public class DBConnection {
         try {
             if (con != null && !con.isClosed()) {
                 con.close();
+                rs.close();
+                stmt.close();
+                ps.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();

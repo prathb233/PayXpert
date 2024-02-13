@@ -12,7 +12,7 @@ import com.hexaware.payxpert.main.Main;
 import com.hexaware.payxpert.model.Employee;
 
 public class EmployeeController {
-	
+			 
 	IEmployeeService empI = new EmployeeDAO();
 	
 	/**
@@ -33,7 +33,7 @@ public class EmployeeController {
     		System.out.println("5. Remove Employee");
     		System.out.println("0. Back to Main Menu");
     		System.out.print("Choose an option: ");
-
+    		
     		employeeOption = scanner.nextInt();
     		scanner.nextLine(); // Consume newline
 
@@ -74,7 +74,7 @@ public class EmployeeController {
                 LocalDate terminationDate = null;
                 System.out.println("Want to assign Termination Date (Y or N)?");
                 String assignTrmDt = scanner.nextLine();
-                if("Y".equals(assignTrmDt)) {
+                if("Y".equalsIgnoreCase(assignTrmDt)) {
                 	do {
 	                    System.out.print("Enter employee Termination Date (YYYY-MM-DD): ");
 	                    terminationDate = LocalDate.parse(scanner.nextLine());
@@ -126,7 +126,7 @@ public class EmployeeController {
                 terminationDate = null;
                 System.out.println("Want to assign Termination Date (Y or N)?");
                 assignTrmDt = scanner.next();
-                if("Y".equals(assignTrmDt)) {
+                if("Y".equalsIgnoreCase(assignTrmDt)) {
                     System.out.print("Enter employee Termination Date (yyyy-mm-dd): ");
                     updatedEmployee.setTerminationDate(LocalDate.parse(scanner.next()));
                 }

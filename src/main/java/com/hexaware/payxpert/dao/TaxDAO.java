@@ -16,7 +16,7 @@ public class TaxDAO extends DBConnection implements ITaxService{
 		con = getDBConn();
 	}
 	
-    @Override //Calculate tax for an employee (not implemented here, as it's calculated in the database)
+    @Override //Get Tax for an employee for the given Year
     public Tax getTaxByYear(int employeeId, int taxYear) {
     	Tax tax = null;
     	try {
@@ -73,7 +73,6 @@ public class TaxDAO extends DBConnection implements ITaxService{
             e.printStackTrace();
             // Handle SQL exception
         }
-
         return tax;
     }
 
@@ -102,7 +101,6 @@ public class TaxDAO extends DBConnection implements ITaxService{
             e.printStackTrace();
             // Handle SQL exception
         }
-
         return taxes;
     }
 
@@ -131,7 +129,6 @@ public class TaxDAO extends DBConnection implements ITaxService{
             e.printStackTrace();
             // Handle SQL exception
         }
-
         return taxes;
     }
 

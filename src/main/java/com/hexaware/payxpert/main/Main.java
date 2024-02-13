@@ -1,7 +1,7 @@
 package com.hexaware.payxpert.main;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 import com.hexaware.payxpert.Constants;
 import com.hexaware.payxpert.controller.EmployeeController;
