@@ -13,11 +13,11 @@ DECLARE last_end_date DATE;
     
     IF last_end_date IS NULL THEN
         SET NEW.Pay_Period_Start_Date = (SELECT Joining_Date FROM Employee WHERE Employee_ID = NEW.Employee_ID);
-        SET NEW.Pay_Period_End_Date = NEW.Pay_Period_Start_Date + INTERVAL 30 DAY;
+        -- SET NEW.Pay_Period_End_Date = NEW.Pay_Period_Start_Date + INTERVAL 30 DAY;
     ELSE
 		SET NEW.Pay_Period_Start_Date = last_end_date + INTERVAL 1 DAY;
-		SET NEW.Pay_Period_End_Date = NEW.Pay_Period_Start_Date + INTERVAL 30 DAY;
     END IF;
+	SET NEW.Pay_Period_End_Date = NEW.Pay_Period_Start_Date + INTERVAL 30 DAY;
 END;    
 //
 DELIMITER ;

@@ -32,8 +32,10 @@ public class DBConnection {
             throw new DatabaseConnectionException();
 
         }
-        return con;
+        //System.out.println(con);
+        return con; 
     }
+    
 
     /**
      * Closes the connection with Database
@@ -42,9 +44,9 @@ public class DBConnection {
         try {
             if (con != null && !con.isClosed()) {
                 con.close();
-                rs.close();
-                stmt.close();
-                ps.close();
+//                rs.close();
+//                stmt.close();
+//                ps.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
