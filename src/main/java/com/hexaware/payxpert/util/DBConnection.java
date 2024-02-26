@@ -1,23 +1,44 @@
 package com.hexaware.payxpert.util;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import com.hexaware.payxpert.exception.DatabaseConnectionException;
 
-public class DBConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/payxpert";
-    private static final String USER = "root";
-    private static final String PASSWORD = "abc123";
+public class DBConnection {	
+    private static String URL;
+    private static String USER;
+    private static String PASSWORD;
     
     protected static Connection con;
     protected PreparedStatement ps;
     protected Statement stmt;
     protected ResultSet rs;
+    
+    /**
+     * Fetches the DB credentials from property file
+     */
+    private static void loadDbProperties() {
+        try {
+            Properties prop = new Properties();
+            InputStream input = new FileInputStream("db.properties");
+            prop.load(input);
+            
+            URL = prop.getProperty("db.url");
+            USER = prop.getProperty("db.user");
+            PASSWORD = prop.getProperty("db.password");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle exception
+        }
+    }
     
     /**
      * Establishes the connection with Database
@@ -26,6 +47,7 @@ public class DBConnection {
     public static Connection getDBConn() {
         try {
             if (con == null || con.isClosed()) {
+            	loadDbProperties();
                 con = DriverManager.getConnection(URL, USER, PASSWORD);
             }
         } catch (SQLException e) {

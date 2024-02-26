@@ -22,7 +22,7 @@ public class EmployeeDAO extends DBConnection implements IEmployeeService{
     public Employee getEmployeeById(int employeeId) {
 	Employee employee = null;
 	try {
-	    String sqlQuery = "SELECT * FROM employee WHERE Employee_ID = ?";
+		String sqlQuery = "SELECT * FROM employee WHERE Employee_ID = ?";
 
 		ps = con.prepareStatement(sqlQuery);
 		ps.setInt(1, employeeId);
