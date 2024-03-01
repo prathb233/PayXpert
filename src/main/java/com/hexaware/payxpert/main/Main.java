@@ -24,7 +24,6 @@ public class Main {
 	static String spaces2 = " ".repeat(spacesCount2);
 
 	public static void main(String[] args) {
-
 		System.out.println();
 		System.out.println(spaces + Constants.GREEN + "Welcome to PayXpert 🚀" + spaces);
 		System.out.println(spaces2 + "Your own Payroll Management System! 🌟\n" + Constants.RESET + spaces2);
