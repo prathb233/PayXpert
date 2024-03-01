@@ -56,8 +56,8 @@ public class Employee {
 
 
     // Method to calculate age
-    public int calculateAge() {
-        LocalDate  currentDate = LocalDate .now();
+    public int calculateAge(LocalDate dateOfBirth) {
+        LocalDate currentDate = LocalDate.now();
         return Period.between(dateOfBirth, currentDate).getYears();
     }
     
@@ -155,17 +155,18 @@ public class Employee {
     @Override
     public String toString() {
         return
-                "\nEmployee ID = " + employeeID +
-                "\nFirst Name = '" + firstName + '\'' +
-                "\nLast Name = '" + lastName + '\'' +
-                "\nDate Of Birth = " + dateOfBirth +
-                "\nGender = '" + gender + '\'' +
-                "\nEmail = '" + email + '\'' +
-                "\nPhone Number = '" + phoneNumber + '\'' +
-                "\nAddress = '" + address + '\'' +
-                "\nPosition = '" + position + '\'' +
-                "\nJoining Date = " + joiningDate +
-                "\nTermination Date = " + terminationDate + "\n";
+                "\nEmployee ID: " + employeeID +
+                "\nFirst Name: " + firstName +
+                "\nLast Name: " + lastName + 
+                "\nDate Of Birth: " + dateOfBirth +
+                "\nAge: " + calculateAge(dateOfBirth) +
+                "\nGender: " + gender + 
+                "\nEmail: " + email + 
+                "\nPhone Number: " + phoneNumber + 
+                "\nAddress: " + address + 
+                "\nPosition: '" + position + "'" +
+                "\nJoining Date: " + joiningDate +
+                "\nTermination Date: " + terminationDate + "\n";
     }
 }
 

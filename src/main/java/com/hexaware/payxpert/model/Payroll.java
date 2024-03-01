@@ -110,12 +110,16 @@ public class Payroll {
     
 	@Override
 	public String toString() {
-		return "\nPayroll ID = " + payrollID + "\nEmployee ID = " + employeeID
-				+ "\nPay Period Start Date = " + payPeriodStartDate
-				+ "\nPay Period End Date = " + payPeriodEndDate 
-				+ "\nBasic Salary = " + basicSalary + "\nOvertime Pay = " + overtimePay
-				+ "\nGross Salary = " + grossSalary + "\nDeductions = " + deductions
-				+ "\nNet Salary = " + netSalary + "\n";
+		return
+				"\nPayroll ID: " + payrollID + 
+				"\nEmployee ID: " + employeeID + 
+				"\nPay Period Start Date: " + payPeriodStartDate + 
+				"\nPay Period End Date: " + payPeriodEndDate + 
+				"\nBasic Salary: " + basicSalary + 
+				"\nOvertime Pay: " + overtimePay + 
+				"\nGross Salary: " + grossSalary + 
+				"\nDeductions: " + deductions + 
+				"\nNet Salary: " + netSalary + "\n";
 	}
     
     

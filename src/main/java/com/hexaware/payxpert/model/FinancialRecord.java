@@ -82,10 +82,13 @@ public class FinancialRecord {
 
 	@Override
 	public String toString() {
-		return "\n[Record ID = " + recordID + "\nEmployee ID = "
-				+ employeeID + "\nRecord Date = " + recordDate + "\nDescription = "
-				+ description + "\nAmount = " + amount + "\nRecord Type = "
-				+ recordType + "]\n";
+		return
+			   "\nRecord ID: " + recordID + 
+			   "\nEmployee ID: " + employeeID + 
+			   "\nRecord Date: " + recordDate + 
+			   "\nDescription: " + description + 
+			   "\nAmount: " + amount + 
+			   "\nRecord Type: " + recordType + "\n";
 	}
     
     

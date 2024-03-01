@@ -65,9 +65,12 @@ public class Tax {
 
 	@Override
 	public String toString() {
-		return "\nTax ID = " + taxID + "\nEmployee ID = " + employeeID
-				+ "\nTax Year = " + taxYear + "\nTaxable Income = " + taxableIncome
-				+ "\nTax Amount = " + taxAmount +"\n";
+		return 
+				"\nTax ID: " + taxID + 
+				"\nEmployee ID: " + employeeID + 
+				"\nTax Year: " + taxYear + 
+				"\nTaxable Income: " + taxableIncome + 
+				"\nTax Amount: " + taxAmount + "\n";
 	}
     
     
