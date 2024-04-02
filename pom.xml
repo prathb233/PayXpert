@@ -30,6 +30,13 @@
 			<version>3.11.2</version> <!-- Use the latest version available -->
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-java</artifactId>
+		    <version>4.19.1</version>
+		</dependency>		
 
 	</dependencies>
 
